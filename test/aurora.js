@@ -2,8 +2,7 @@ import chai, { assert } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { spy } from 'sinon';
 
-import AuroraGraphQL from '../';
-import { ObjectIDType } from '../src/types/common';
+import AuroraGraphQL from '../src';
 
 // Chai As Promised configuration
 chai.use(chaiAsPromised);
