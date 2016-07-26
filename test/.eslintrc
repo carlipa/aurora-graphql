@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "./../.eslintrc"
+  ],
+  "rules": {
+    "arrow-body-style": 0,
+    "import/no-extraneous-dependencies": 0
+  },
+  "env": {
+    "mocha": true
+  }
+}

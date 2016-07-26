@@ -1,0 +1,38 @@
+{
+  "_id": "56d997aba54d7517d64c3a92",
+  "name": "GraphQL Test",
+  "shortName": "graphql_test",
+  "uniqueName": "graphql_test_2",
+  "classes": {
+    "version": 2,
+    "hash": "1234567890",
+    "definitions": {
+      "user": {
+        "name": {
+          "description": "The name of the user",
+          "type": "String",
+          "required": true
+        },
+        "avatar": {
+          "type": "Relation",
+          "ref": "file"
+        },
+        "vip": "boolean",
+        "age": "Integer",
+        "popularity": "Float",
+        "dynamic": "Mixed"
+      },
+      "file": {
+        "author": {
+          "type": "Relation",
+          "ref": "user",
+          "required": true
+        },
+        "body": {
+          "type": "String",
+          "required": true
+        }
+      }
+    }
+  }
+}

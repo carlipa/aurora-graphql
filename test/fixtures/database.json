@@ -1,0 +1,47 @@
+{
+  "user1": {
+    "name": "User 1",
+    "vip": true,
+    "age": 25,
+    "popularity": 4,
+    "dynamic": {
+      "key1": "string",
+      "key2": 1234,
+      "key3": 56.78,
+      "key4": true,
+      "key5": ["str1", "str2"],
+      "key6": {
+        "key6-1": "string",
+        "key6-2": 1234,
+        "key6-3": 56.78,
+        "key6-4": true,
+        "key6-5": ["str1", "str2"]
+      }
+    }
+  },
+  "user2": {
+    "name": "User 2",
+    "vip": false,
+    "age": 42,
+    "popularity": 3.4
+  },
+  "news1": {
+    "title": "Title News 1",
+    "body": "Body News 1",
+    "arrayOfString1": ["str1", "str2"],
+    "arrayOfString2": ["str3", "str4"]
+  },
+  "news2": {
+    "title": "Title News 2",
+    "arrayOfString1": ["str5", "str6"]
+  },
+  "comment1": {
+    "body": "Comment 1"
+  },
+  "comment2": {
+    "body": "Comment 2"
+  },
+  "comment3": {
+    "body": "Comment 3"
+  }
+}

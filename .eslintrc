@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb-base"
+  ],
+  "rules": {
+    "max-len": [2, 120, 2],
+    "generator-star-spacing": 0,
+    "babel/generator-star-spacing": 1,
+    "no-underscore-dangle": 0
+  },
+  "plugins": [
+    "babel"
+  ]
+}
