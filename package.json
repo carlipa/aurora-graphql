@@ -16,6 +16,10 @@
     "name": "Guillaume Coupelant",
     "email": "guillaume.coupelant@gmail..com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carlipa/aurora-graphql.git"
+  },
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.1",
