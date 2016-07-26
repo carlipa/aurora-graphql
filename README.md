@@ -1,9 +1,9 @@
 Aurora GraphQL
 ==============
 [![Build Status](https://travis-ci.org/carlipa/aurora-graphql.svg?branch=master)](https://travis-ci.org/carlipa/aurora-graphql)
-[![Code Climate](https://codeclimate.com/github/carlipa/aurora-graphql/badges/gpa.svg)](https://codeclimate.com/github/carlipa/aurora-graphql)
 [![Coverage Status](https://coveralls.io/repos/github/carlipa/aurora-graphql/badge.svg?branch=master)](https://coveralls.io/github/carlipa/aurora-graphql?branch=master)
-[![npm version](https://badge.fury.io/js/%40carlipa%2Faurora-graphql.svg)](https://badge.fury.io/js/%40carlipa%2Faurora-graphql)
+[![Dependency Status](https://david-dm.org/carlipa/aurora-graphql.svg)](https://david-dm.org/carlipa/aurora-graphql)
+[![devDependency Status](https://david-dm.org/carlipa/aurora-graphql/dev-status.svg)](https://david-dm.org/carlipa/aurora-graphql#info=devDependencies)
 
 `Aurora GraphQL` is an express middleware that supports multiple projects, dynamically loaded.
 
