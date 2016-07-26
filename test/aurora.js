@@ -26,9 +26,9 @@ describe('Aurora - GraphQL', () => {
     it('should be called when a schema is requested', () => {
       auroraGraphQL._getSchemaForProject({
         project: {
+          hash: '12345',
           classes: {
             definitions: {},
-            hash: '12345',
           },
         },
         storage: {},
@@ -40,9 +40,9 @@ describe('Aurora - GraphQL', () => {
     it('should be called again only with a new configHash', () => {
       auroraGraphQL._getSchemaForProject({
         project: {
+          hash: '12345',
           classes: {
             definitions: {},
-            hash: '12345',
           },
         },
         storage: {},
@@ -50,9 +50,9 @@ describe('Aurora - GraphQL', () => {
 
       auroraGraphQL._getSchemaForProject({
         project: {
+          hash: '12345',
           classes: {
             definitions: {},
-            hash: '12345',
           },
         },
         storage: {},
@@ -60,9 +60,9 @@ describe('Aurora - GraphQL', () => {
 
       auroraGraphQL._getSchemaForProject({
         project: {
+          hash: '67890',
           classes: {
             definitions: {},
-            hash: '67890',
           },
         },
         storage: {},
@@ -71,7 +71,7 @@ describe('Aurora - GraphQL', () => {
       assert.isTrue(AuroraGraphQL._getSchema.calledTwice);
     });
 
-    it('should be called again only with a new classes definitions if no configHash', () => {
+    it('should be called again only with a new classes definitions if no projectHash', () => {
       auroraGraphQL._getSchemaForProject({
         project: {
           classes: {
