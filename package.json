@@ -1,7 +1,7 @@
 {
   "name": "@carlipa/aurora-graphql",
   "version": "1.0.1",
-  "description": "",
+  "description": "GraphQL dynamic server, using lazy schema creation, and agnostic (mongoose based) storage engine",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rimraf lib/*; mkdir -p lib; babel src/ -d lib/ -s",
