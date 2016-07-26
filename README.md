@@ -9,7 +9,7 @@ Aurora GraphQL
 
 ### GraphQL - Relay
 
-The goal of this library is to provide an easy and fast way to create a `GraphQL`, `Relay` compliant server, which can serve multiple different projects that define their data structure with a JSON.
+The goal of this library is to provide an easy and fast way to create a `GraphQL`, `Relay` compliant server, that can serve multiple projects.
 
 ### Express Middleware
 
