@@ -44,7 +44,7 @@ import { ClassesFieldsHelper } from './';
  * @private
  */
 export default function getQueryFields(classesFieldsHelper) {
-  if (!classesFieldsHelper instanceof ClassesFieldsHelper) {
+  if (!(classesFieldsHelper instanceof ClassesFieldsHelper)) {
     throw new Error('`classesFieldsHelper` must be an instance `ClassesFieldsHelper`');
   }
 

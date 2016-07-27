@@ -28,7 +28,7 @@ import { ClassesFieldsHelper } from './';
  * @private
  */
 export default function getMutationFields(classesFieldsHelper) {
-  if (!classesFieldsHelper instanceof ClassesFieldsHelper) {
+  if (!(classesFieldsHelper instanceof ClassesFieldsHelper)) {
     throw new Error('`classesFieldsHelper` must be an instance `ClassesFieldsHelper`');
   }
 
