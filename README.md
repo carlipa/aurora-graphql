@@ -1,5 +1,6 @@
 Aurora GraphQL
 ==============
+[![npm version](https://badge.fury.io/js/%40carlipa%2Faurora-graphql.svg)](https://badge.fury.io/js/%40carlipa%2Faurora-graphql)
 [![Build Status](https://travis-ci.org/carlipa/aurora-graphql.svg?branch=master)](https://travis-ci.org/carlipa/aurora-graphql)
 [![Coverage Status](https://coveralls.io/repos/github/carlipa/aurora-graphql/badge.svg?branch=master)](https://coveralls.io/github/carlipa/aurora-graphql?branch=master)
 [![Dependency Status](https://david-dm.org/carlipa/aurora-graphql.svg)](https://david-dm.org/carlipa/aurora-graphql)
