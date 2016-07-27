@@ -207,8 +207,6 @@ describe('Aurora - GraphQL - API', () => {
             query: `{
             project: _project {
               name
-              shortName
-              uniqueName
               hash
               classes {
                 version
@@ -223,7 +221,7 @@ describe('Aurora - GraphQL - API', () => {
             assert.deepProperty(res, 'body.data.project');
             const project = res.body.data.project;
 
-            assert.deepEqual(project, pick(projectData, ['name', 'shortName', 'uniqueName', 'hash', 'classes']));
+            assert.deepEqual(project, pick(projectData, ['name', 'hash', 'classes']));
           });
       });
 
