@@ -67,9 +67,6 @@ export default function generateClassesHelpers(classesFieldsHelper) {
     const getFields = ({ resolveRelations = true, disableNonNull = false } = {}) => {
       const fields = {};
 
-      // There's a bug with babel here, the arrow function is not correctly binding `factory`
-      const self = classesFieldsHelper;
-
       each(fieldsDefinitions, (field, fieldName) => {
         const _fieldName = camelCase(fieldName);
         if (ClassesFieldsHelper.RESERVED_FIELDS.indexOf(_fieldName) !== -1) {
@@ -102,10 +99,10 @@ export default function generateClassesHelpers(classesFieldsHelper) {
 
             if (resolveRelations) {
               fields[_fieldName] = {
-                type: self._connections[_ref],
+                type: classesFieldsHelper._connections[_ref],
                 args: connectionArgs,
                 resolve: (fieldsList, args) => connectionFromArray(
-                  map(fieldsList[_fieldName], (id) => self._getClassDataById(_ref, id)),
+                  map(fieldsList[_fieldName], (id) => classesFieldsHelper._getClassDataById(_ref, id)),
                   args
                 ),
               };
@@ -139,8 +136,10 @@ export default function generateClassesHelpers(classesFieldsHelper) {
 
             if (resolveRelations) {
               fields[_fieldName] = {
-                type: _field.required && !disableNonNull ? new GraphQLNonNull(self._types[_ref]) : self._types[_ref],
-                resolve: (fieldsList) => self._getClassDataById(_ref, fieldsList[_fieldName]),
+                type: _field.required && !disableNonNull
+                  ? new GraphQLNonNull(classesFieldsHelper._types[_ref])
+                  : classesFieldsHelper._types[_ref],
+                resolve: (fieldsList) => classesFieldsHelper._getClassDataById(_ref, fieldsList[_fieldName]),
               };
             } else {
               fields[_fieldName] = {
