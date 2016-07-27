@@ -1,6 +1,6 @@
 {
   "name": "@carlipa/aurora-graphql",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "GraphQL dynamic server, using lazy schema creation, and agnostic (mongoose based) storage engine",
   "main": "lib/index.js",
   "scripts": {
