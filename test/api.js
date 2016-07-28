@@ -2,7 +2,6 @@
 import request from 'supertest-as-promised';
 import chai, { assert } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import portfinder from 'portfinder';
 
 // Deps
 import Promise from 'bluebird';
@@ -18,7 +17,6 @@ import ClassSchema from '../src/schemas/class.schema';
 
 // Promisification
 Promise.promisifyAll(fs);
-Promise.promisifyAll(portfinder);
 
 // Chai As Promised configuration
 chai.use(chaiAsPromised);
@@ -97,8 +95,6 @@ describe('Aurora - GraphQL - API', () => {
 
     // Prepare the data models
     await prepareModels();
-
-    return portfinder.getPortAsync({ port: process.env.PORT }).then(::app.listen);
   });
 
   beforeEach(async function beforeEach() {
