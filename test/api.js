@@ -199,7 +199,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             project: _project {
               name
@@ -210,7 +210,7 @@ describe('Aurora - GraphQL - API', () => {
               }
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -225,7 +225,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             user (id: "${user1._id}") {
               mongoId
@@ -237,7 +237,7 @@ describe('Aurora - GraphQL - API', () => {
               _classVersion
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -263,13 +263,13 @@ describe('Aurora - GraphQL - API', () => {
             return request(app)
               .post('/graphql')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `{
                 user (id: "${user1._id}") {
                   id
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -283,7 +283,7 @@ describe('Aurora - GraphQL - API', () => {
             return request(app)
               .post('/graphql')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `{
                 user (id: "${graphQLId}") {
                   id
@@ -291,7 +291,7 @@ describe('Aurora - GraphQL - API', () => {
                   name
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -309,7 +309,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             user (name: "${user1.data.name}") {
               mongoId
@@ -319,7 +319,7 @@ describe('Aurora - GraphQL - API', () => {
               popularity
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -338,13 +338,13 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             news (author: "${user1._id.toString()}") {
               mongoId
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -361,13 +361,13 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             news (author: "${user1GraphQLID}") {
               mongoId
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -382,13 +382,13 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             news (comments: ["${comment1._id.toString()}", "${comment2._id.toString()}"]) {
               mongoId
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -403,7 +403,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             user (id: "${user1._id}") {
               mongoId
@@ -417,7 +417,7 @@ describe('Aurora - GraphQL - API', () => {
               }
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -439,7 +439,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             news (id: "${news1._id}") {
               mongoId
@@ -454,7 +454,7 @@ describe('Aurora - GraphQL - API', () => {
               }
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -475,7 +475,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             comment (id: "${comment3._id}") {
               mongoId
@@ -485,7 +485,7 @@ describe('Aurora - GraphQL - API', () => {
               }
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -507,7 +507,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             user (id: "${user2._id}") {
               mongoId
@@ -517,7 +517,7 @@ describe('Aurora - GraphQL - API', () => {
               }
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -539,11 +539,11 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             user: userRaw (id: "${user1._id}")
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -563,7 +563,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users {
               edges {
@@ -575,7 +575,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -596,7 +596,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users (orderBy: NAME_DESC) {
               edges {
@@ -608,7 +608,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -629,7 +629,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users (filters: {
                 age: {
@@ -645,7 +645,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -664,7 +664,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users (filters: {
                 age: {
@@ -680,7 +680,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -699,7 +699,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users (filters: {
                 name: {
@@ -715,7 +715,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -734,7 +734,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users (filters: {
                 name: {
@@ -750,7 +750,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -769,7 +769,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users (filters: {
                 name: {
@@ -785,7 +785,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -801,7 +801,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             users (filters: {
                 name: {
@@ -817,7 +817,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -833,7 +833,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             news: multipleNews (filters: {
                 author: {
@@ -848,7 +848,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -868,7 +868,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             news: multipleNews (filters: {
                 author: {
@@ -883,7 +883,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -903,7 +903,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             news: multipleNews (filters: {
                 author: {
@@ -918,7 +918,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -937,7 +937,7 @@ describe('Aurora - GraphQL - API', () => {
         return request(app)
           .post('/graphql')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `{
             multipleNews {
               edges {
@@ -968,7 +968,7 @@ describe('Aurora - GraphQL - API', () => {
               totalCount
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -1051,7 +1051,7 @@ describe('Aurora - GraphQL - API', () => {
           .post('/graphql')
           .set('X-Mutation', null)
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `mutation {
                 mutation: createUser (input: {
                   name: "TEST"
@@ -1063,7 +1063,7 @@ describe('Aurora - GraphQL - API', () => {
                   }
                 }
               }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -1093,7 +1093,7 @@ describe('Aurora - GraphQL - API', () => {
               .post('/graphql')
               .set('X-Mutation', 'allow')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `mutation {
                 mutation: createUser (input: {
                   name: "TEST"
@@ -1108,7 +1108,7 @@ describe('Aurora - GraphQL - API', () => {
                   }
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1130,7 +1130,7 @@ describe('Aurora - GraphQL - API', () => {
             return request(app)
               .post('/graphql')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `{
                 user (id: "${userMongoId}") {
                   mongoId
@@ -1139,7 +1139,7 @@ describe('Aurora - GraphQL - API', () => {
                   _classVersion
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1176,7 +1176,7 @@ describe('Aurora - GraphQL - API', () => {
               .post('/graphql')
               .set('X-Mutation', 'allow')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `mutation {
                 mutation: createNews (input: {
                   title: "${newsData.title}"
@@ -1214,7 +1214,7 @@ describe('Aurora - GraphQL - API', () => {
                   }
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1273,7 +1273,7 @@ describe('Aurora - GraphQL - API', () => {
             return request(app)
               .post('/graphql')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `{
                 news (id: "${newsMongoId}") {
                   mongoId
@@ -1284,7 +1284,7 @@ describe('Aurora - GraphQL - API', () => {
                   _classVersion
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1306,7 +1306,7 @@ describe('Aurora - GraphQL - API', () => {
           .post('/graphql')
           .set('X-Mutation', 'allow')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `mutation {
             mutation: updateNews (input: {
               id: "${news1._id}"
@@ -1325,7 +1325,7 @@ describe('Aurora - GraphQL - API', () => {
               }
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -1351,7 +1351,7 @@ describe('Aurora - GraphQL - API', () => {
           .post('/graphql')
           .set('X-Mutation', 'allow')
           .set('Content-Type', 'application/json')
-          .send(JSON.stringify({
+          .send({
             query: `mutation {
             mutation: replaceNews (input: {
               id: "${news1._id}"
@@ -1370,7 +1370,7 @@ describe('Aurora - GraphQL - API', () => {
               }
             }
           }`,
-          }))
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then((res) => {
@@ -1399,7 +1399,7 @@ describe('Aurora - GraphQL - API', () => {
               .post('/graphql')
               .set('X-Mutation', 'allow')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `mutation {
                 mutation: removeNews (input: {
                   id: "${news1._id}"
@@ -1408,7 +1408,7 @@ describe('Aurora - GraphQL - API', () => {
                   removedNewsId
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1422,7 +1422,7 @@ describe('Aurora - GraphQL - API', () => {
             return request(app)
               .post('/graphql')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `{
                 news (id: "${news1._id}") {
                   mongoId
@@ -1432,7 +1432,7 @@ describe('Aurora - GraphQL - API', () => {
                   }
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1445,7 +1445,7 @@ describe('Aurora - GraphQL - API', () => {
               .post('/graphql')
               .set('X-Mutation', 'allow')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `mutation {
                 mutation: recoverNews (input: {
                   id: "${news1._id}"
@@ -1456,7 +1456,7 @@ describe('Aurora - GraphQL - API', () => {
                   }
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1470,7 +1470,7 @@ describe('Aurora - GraphQL - API', () => {
             return request(app)
               .post('/graphql')
               .set('Content-Type', 'application/json')
-              .send(JSON.stringify({
+              .send({
                 query: `{
                 news (id: "${news1._id}") {
                   mongoId
@@ -1480,7 +1480,7 @@ describe('Aurora - GraphQL - API', () => {
                   }
                 }
               }`,
-              }))
+              })
               .expect('Content-Type', /json/)
               .expect(200)
               .then((res) => {
@@ -1501,7 +1501,7 @@ describe('Aurora - GraphQL - API', () => {
       return request(app)
         .post('/graphql')
         .set('Content-Type', 'application/json')
-        .send(JSON.stringify({
+        .send({
           query: `{
             file (id: "${file1._id}") {
               mongoId
@@ -1510,7 +1510,7 @@ describe('Aurora - GraphQL - API', () => {
               length
             }
           }`,
-        }))
+        })
         .expect('Content-Type', /json/)
         .expect(200)
         .then((res) => {
