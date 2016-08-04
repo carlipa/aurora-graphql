@@ -156,7 +156,7 @@ export default function getMutationFields(classesFieldsHelper) {
       inputFields: {
         ...getFields({ resolveRelations: false, disableNonNull: false }),
         id: {
-          type: new GraphQLNonNull(GraphQLID),
+          type: GraphQLID,
         },
       },
       outputFields: {
@@ -174,16 +174,23 @@ export default function getMutationFields(classesFieldsHelper) {
         // Remove the id field
           .then((fields) => omit(fields, 'id'))
           .then((fields) => {
-            const _id = objectIdFromData(input.id);
+            // If an id is provided, use it, if not, a new object will be created (upsert)
+            const query = {};
+            if (input.id) {
+              query._id = objectIdFromData(input.id);
+            }
 
             return classesFieldsHelper._getModel(className)
-              .update({ _id }, {
+              .findOneAndUpdate(query, {
                 $set: {
                   data: fields,
                   _classVersion: classesFieldsHelper._classes.version,
                 },
+              }, {
+                new: true,
+                upsert: true,
               })
-              .then(() => ({ mongoId: _id }));
+              .then((replaced) => ({ mongoId: replaced.id }));
           });
       },
     });
