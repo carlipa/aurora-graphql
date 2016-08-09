@@ -1,11 +1,12 @@
 import graphqlHttp from 'express-graphql';
 import crypto from 'crypto';
 import { compact } from 'lodash';
+import { Router } from 'express';
 
 import classFieldsGettersFactory from './factories/classes.fields.factory';
 import classFileFieldsGettersFactory from './factories/classes.files.fields.factory';
 import projectFieldsGettersFactory from './factories/project.fields.factory';
-import { generateSchema } from './utils/graphql';
+import { generateSchema, getSchemaJson } from './utils/graphql';
 
 export default class GraphQLApi {
   _projectsClasses = {};
@@ -46,48 +47,76 @@ export default class GraphQLApi {
     });
   }
 
+  static validateReq(req) {
+    if (!req.aurora) {
+      throw new Error('Missing Aurora object !');
+    }
+    if (!req.aurora.project) {
+      throw new Error('Missing project data !');
+    }
+    if (!req.aurora.storage) {
+      throw new Error('No storage database connection !');
+    }
+  }
+
   /**
-   * Return the schema for a specific project, will be generated if needed
+   * Return the classes GraphQL schema for a specific project, will be generated if needed
    * @param project
    * @param storage
    * @private
    */
-  _getSchemaForProject({ project, storage }) {
+  _getClassesForProject({ project, storage }) {
     const projectHash = project.hash ||
       crypto.createHash('sha256').update(JSON.stringify(project.classes.definitions)).digest('hex');
 
     if (!this._projectsClasses[project._id] || this._projectsClasses[project._id].projectHash !== projectHash) {
+      const graphQLSchema = GraphQLApi._getSchema({ storage, project });
+
+      const schemaJSONPromise = getSchemaJson(graphQLSchema);
+
       this._projectsClasses[project._id] = {
-        schema: GraphQLApi._getSchema({ storage, project }),
+        schema: graphQLSchema,
+        getSchemaJSON: () => schemaJSONPromise,
         projectHash,
       };
     }
 
-    return this._projectsClasses[project._id].schema;
+    return this._projectsClasses[project._id];
   }
 
   /**
    * Returns an express middleware of the GraphQL schema
    */
   getMiddleware() {
-    return graphqlHttp((req) => {
-      if (!req.aurora) {
-        throw new Error('Missing Aurora object !');
-      }
-      if (!req.aurora.project) {
-        throw new Error('Missing project data !');
-      }
-      if (!req.aurora.storage) {
-        throw new Error('No storage database connection !');
-      }
+    const router = new Router();
+
+    const schemaMiddleware = new Router();
+    schemaMiddleware.use((req, res) => {
+      // Will throw if `req` is invalid
+      GraphQLApi.validateReq(req);
+
+      this._getClassesForProject({ project: req.aurora.project, storage: req.aurora.storage })
+        .getSchemaJSON()
+        .then((result) => {
+          res.json(result);
+        });
+    });
+
+    const graphQLMiddleware = graphqlHttp((req) => {
+      // Will throw if `req` is invalid
+      GraphQLApi.validateReq(req);
 
       return {
-        schema: this._getSchemaForProject({ project: req.aurora.project, storage: req.aurora.storage }),
+        schema: this._getClassesForProject({ project: req.aurora.project, storage: req.aurora.storage }).schema,
         rootValue: {
           allowMutation: req.aurora.allowMutation,
         },
         graphiql: true,
       };
     });
+
+    router.use('/schema.json', schemaMiddleware);
+    router.use(graphQLMiddleware);
+    return router;
   }
 }

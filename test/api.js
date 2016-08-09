@@ -193,6 +193,18 @@ describe('Aurora - GraphQL - API', () => {
     await news2.save();
   });
 
+  describe('Schema', () => {
+    it('should get a correct JSON schema', () => {
+      return request(app)
+        .get('/schema.json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then((res) => {
+          assert.deepProperty(res.body, 'data.__schema');
+        });
+    });
+  });
+
   describe('Queries', () => {
     describe('One', () => {
       it('should query the project data', () => {

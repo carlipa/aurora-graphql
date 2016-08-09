@@ -1,9 +1,11 @@
 import { Types } from 'mongoose';
 import { fromGlobalId } from 'graphql-relay';
 import {
+  graphql,
   GraphQLObjectType,
   GraphQLSchema,
 } from 'graphql';
+import { introspectionQuery } from 'graphql/utilities';
 
 import {
   assignIn,
@@ -53,4 +55,8 @@ export function generateSchema({ queryFieldsGetters = [], mutationFieldsGetters 
     query: keys(queryFields).length ? queryType : null,
     mutation: keys(mutationFields).length ? mutationType : null,
   });
+}
+
+export function getSchemaJson(schema) {
+  return graphql(schema, introspectionQuery);
 }

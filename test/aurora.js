@@ -7,6 +7,7 @@ import AuroraGraphQL from '../src';
 // Chai As Promised configuration
 chai.use(chaiAsPromised);
 
+const goodProjectData = require('./fixtures/project.json');
 const badProjectReservedPrefixData = require('./fixtures/bad_project_reserved_prefix.json');
 const badProjectReservedClassNameData = require('./fixtures/bad_project_reserved_className.json');
 
@@ -24,7 +25,7 @@ describe('Aurora - GraphQL', () => {
     });
 
     it('should be called when a schema is requested', () => {
-      auroraGraphQL._getSchemaForProject({
+      auroraGraphQL._getClassesForProject({
         project: {
           hash: '12345',
           classes: {
@@ -38,7 +39,7 @@ describe('Aurora - GraphQL', () => {
     });
 
     it('should be called again only with a new configHash', () => {
-      auroraGraphQL._getSchemaForProject({
+      auroraGraphQL._getClassesForProject({
         project: {
           hash: '12345',
           classes: {
@@ -48,7 +49,7 @@ describe('Aurora - GraphQL', () => {
         storage: {},
       });
 
-      auroraGraphQL._getSchemaForProject({
+      auroraGraphQL._getClassesForProject({
         project: {
           hash: '12345',
           classes: {
@@ -58,7 +59,7 @@ describe('Aurora - GraphQL', () => {
         storage: {},
       });
 
-      auroraGraphQL._getSchemaForProject({
+      auroraGraphQL._getClassesForProject({
         project: {
           hash: '67890',
           classes: {
@@ -72,7 +73,7 @@ describe('Aurora - GraphQL', () => {
     });
 
     it('should be called again only with a new classes definitions if no projectHash', () => {
-      auroraGraphQL._getSchemaForProject({
+      auroraGraphQL._getClassesForProject({
         project: {
           classes: {
             definitions: { test1: {} },
@@ -82,7 +83,7 @@ describe('Aurora - GraphQL', () => {
         storage: {},
       });
 
-      auroraGraphQL._getSchemaForProject({
+      auroraGraphQL._getClassesForProject({
         project: {
           classes: {
             definitions: { test1: {} },
@@ -91,7 +92,7 @@ describe('Aurora - GraphQL', () => {
         storage: {},
       });
 
-      auroraGraphQL._getSchemaForProject({
+      auroraGraphQL._getClassesForProject({
         project: {
           classes: {
             definitions: { test2: {} },
@@ -103,9 +104,20 @@ describe('Aurora - GraphQL', () => {
       assert.isTrue(AuroraGraphQL._getSchema.calledTwice);
     });
 
+    it('should generate a GraphQL JSON schema', () => {
+      const projectClasses = auroraGraphQL._getClassesForProject({
+        project: goodProjectData,
+        storage: {},
+      });
+
+      return projectClasses.getSchemaJSON().then((result) => {
+        assert.deepProperty(result, 'data.__schema');
+      });
+    });
+
     it('should throw when using reserved prefix', () => {
       assert.throw(() => {
-        auroraGraphQL._getSchemaForProject({
+        auroraGraphQL._getClassesForProject({
           project: badProjectReservedPrefixData,
           storage: {},
         });
@@ -114,7 +126,7 @@ describe('Aurora - GraphQL', () => {
 
     it('should throw when using reserved className', () => {
       assert.throw(() => {
-        auroraGraphQL._getSchemaForProject({
+        auroraGraphQL._getClassesForProject({
           project: badProjectReservedClassNameData,
           storage: {},
         });
