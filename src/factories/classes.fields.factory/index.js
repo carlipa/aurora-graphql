@@ -271,8 +271,11 @@ export default function classesFieldsGettersFactory({ storage, classes }) {
   generateClassesHelpers(classesFieldsHelper);
   generateTypesAndConnections(classesFieldsHelper);
 
+  const queryFields = getQueryFields(classesFieldsHelper);
+  const mutationFields = getMutationFields(classesFieldsHelper, queryFields);
+
   return {
-    getQueryFields: () => getQueryFields(classesFieldsHelper),
-    getMutationFields: () => getMutationFields(classesFieldsHelper),
+    getQueryFields: () => queryFields,
+    getMutationFields: () => mutationFields,
   };
 }

@@ -11,6 +11,7 @@ import {
 } from 'graphql-relay';
 
 import {
+  camelCase,
   find,
   fromPairs,
   isArray,
@@ -27,7 +28,7 @@ import { ClassesFieldsHelper } from './';
  * Generate a function to be used as "getMutationFields" in the schema
  * @private
  */
-export default function getMutationFields(classesFieldsHelper) {
+export default function getMutationFields(classesFieldsHelper, queryFields) {
   if (!(classesFieldsHelper instanceof ClassesFieldsHelper)) {
     throw new Error('`classesFieldsHelper` must be an instance `ClassesFieldsHelper`');
   }
@@ -35,7 +36,15 @@ export default function getMutationFields(classesFieldsHelper) {
   // return () => {
   const mutations = {};
 
-  classesFieldsHelper._classesHelpers.forEach(({ name: className, getFields, getFieldsWithRelations }) => {
+  classesFieldsHelper._classesHelpers.forEach(({
+    name: className,
+    plural,
+    getFields,
+    getFieldsWithRelations,
+  }) => {
+    // Pluralize the field name
+    const pluralName = camelCase(plural || `${className}s`);
+
     const lcName = className.toLowerCase();
 
     const createFieldName = `create${className}`;
@@ -94,6 +103,7 @@ export default function getMutationFields(classesFieldsHelper) {
           type: classesFieldsHelper._types[lcName],
           resolve: (payload) => classesFieldsHelper._getClassDataById(className, payload.mongoId),
         },
+        [pluralName]: queryFields[pluralName],
       },
       mutateAndGetPayload: (input, context, { rootValue: { allowMutation } }) => {
         if (!allowMutation) {
@@ -124,6 +134,7 @@ export default function getMutationFields(classesFieldsHelper) {
           type: classesFieldsHelper._types[lcName],
           resolve: (payload) => classesFieldsHelper._getClassDataById(className, payload.mongoId),
         },
+        [pluralName]: queryFields[pluralName],
       },
       mutateAndGetPayload: (input, context, { rootValue: { allowMutation } }) => {
         if (!allowMutation) {
@@ -164,6 +175,7 @@ export default function getMutationFields(classesFieldsHelper) {
           type: classesFieldsHelper._types[lcName],
           resolve: (payload) => classesFieldsHelper._getClassDataById(className, payload.mongoId),
         },
+        [pluralName]: queryFields[pluralName],
       },
       mutateAndGetPayload: (input, context, { rootValue: { allowMutation } }) => {
         if (!allowMutation) {
@@ -201,6 +213,7 @@ export default function getMutationFields(classesFieldsHelper) {
           type: GraphQLString,
           resolve: (payload) => payload.mongoId,
         },
+        [pluralName]: queryFields[pluralName],
       },
       mutateAndGetPayload: (input, context, { rootValue: { allowMutation } }) => {
         if (!allowMutation) {
@@ -228,6 +241,7 @@ export default function getMutationFields(classesFieldsHelper) {
           type: classesFieldsHelper._types[lcName],
           resolve: (payload) => classesFieldsHelper._getClassDataById(className, payload.mongoId),
         },
+        [pluralName]: queryFields[pluralName],
       },
       mutateAndGetPayload: (input, context, { rootValue: { allowMutation } }) => {
         if (!allowMutation) {
