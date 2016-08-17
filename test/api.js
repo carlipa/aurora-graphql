@@ -777,6 +777,76 @@ describe('Aurora - GraphQL - API', () => {
           });
       });
 
+      it('should query users, filtered by vip state (eq: true)', () => {
+        return request(app)
+          .post('/graphql')
+          .set('Content-Type', 'application/json')
+          .send({
+            query: `{
+            users (filters: {
+                vip: {
+                  eq: true
+                }
+              }) {
+              edges {
+                node {
+                  mongoId
+                  name
+                }
+              }
+              totalCount
+            }
+          }`,
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then((res) => {
+            assert.deepProperty(res, 'body.data.users');
+            const users = res.body.data.users;
+
+            assert.strictEqual(users.totalCount, 1);
+            assert.strictEqual(users.edges.length, 1);
+
+            assert.strictEqual(users.edges[0].node.mongoId, user1._id.toString());
+            assert.strictEqual(users.edges[0].node.name, user1.data.name);
+          });
+      });
+
+      it('should query users, filtered by vip state (eq: false)', () => {
+        return request(app)
+          .post('/graphql')
+          .set('Content-Type', 'application/json')
+          .send({
+            query: `{
+            users (filters: {
+                vip: {
+                  eq: false
+                }
+              }) {
+              edges {
+                node {
+                  mongoId
+                  name
+                }
+              }
+              totalCount
+            }
+          }`,
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then((res) => {
+            assert.deepProperty(res, 'body.data.users');
+            const users = res.body.data.users;
+
+            assert.strictEqual(users.totalCount, 1);
+            assert.strictEqual(users.edges.length, 1);
+
+            assert.strictEqual(users.edges[0].node.mongoId, user2._id.toString());
+            assert.strictEqual(users.edges[0].node.name, user2.data.name);
+          });
+      });
+
       it('should not query users, filtered by name with 0 matching regexp (regexp: /^\\w{3} 1/i)', () => {
         return request(app)
           .post('/graphql')

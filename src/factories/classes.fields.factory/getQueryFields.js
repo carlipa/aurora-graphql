@@ -24,6 +24,7 @@ import {
   find,
   fromPairs,
   isArray,
+  isUndefined,
   keys,
   map,
   mapKeys,
@@ -211,9 +212,15 @@ export default function getQueryFields(classesFieldsHelper) {
 
           // If we explicitly demand a field, the `in` property is ignored
           // We use `in` on an array[1], since mongoose doesn't use `$eq` queries
-          // TODO better implementation
-          if (safeFilter.eq) {
+          if (!isUndefined(safeFilter.eq)) {
             safeFilter.in = [safeFilter.eq];
+
+            // If the filter is a boolean one, "false" is the same as "undefined"
+            // (since default boolean value is undefined)
+            if (safeFilter.eq === false) {
+              safeFilter.in.push(undefined);
+            }
+
             delete safeFilter.eq;
           }
 

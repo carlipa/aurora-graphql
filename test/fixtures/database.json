@@ -21,7 +21,6 @@
   },
   "user2": {
     "name": "User 2",
-    "vip": false,
     "age": 42,
     "popularity": 3.4
   },
